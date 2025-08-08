@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use sqlx::prelude::FromRow;
 
 /*
 Model ของ Categoris ที่ใช้จัดหมวดหมู่ของ Product
@@ -19,7 +20,7 @@ serving_size_grams ขนาดการบริโภคต่อหน่ว�
 is_upf เป็น Ultra process food หรือไม่
 is_healthier ผ่านเกณฑ์การรับรองตาม http://healthierlogo.com/ หรือไม่
 */
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, FromRow)]
 pub struct Product {
     pub id: String,
     pub name: String,
@@ -28,7 +29,7 @@ pub struct Product {
     pub categories: Vec<String>,
 
     pub serving_size_grams: Option<f32>,
-    pub calories: u32,
+    pub calories: i32,
     pub fat: f32,
     pub sugar: f32,
     pub sodium: f32,
