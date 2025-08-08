@@ -1,3 +1,4 @@
 .env
 /target/
 /crud_proj/target
+.vscode/

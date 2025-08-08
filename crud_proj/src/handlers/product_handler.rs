@@ -14,8 +14,6 @@ pub async fn get_product_list(
 ) -> Result<Json<Vec<Product>>, AppError> {
     // Validate pagination parameters
     // pagination.validate()?;
-    
-    // ส่ง pool ไปยัง product_service
     let products = product_service::list_products(&pool, pagination).await?;
     Ok(Json(products))
 }
