@@ -2,3 +2,4 @@
 /target/
 /crud_proj/target
 .vscode/
+.sqlx
