@@ -1,4 +1,4 @@
-use crate::{errors::AppError, models::products::Product, reposistoris::product_repositories};
+use crate::{errors::AppError, models::products::Product, repositories::product_repositories};
 use crate::{models::pagination::Pagination};
 use sqlx::PgPool;
 

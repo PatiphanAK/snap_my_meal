@@ -1,3 +1,5 @@
+use super::Database;
+
 pub async fn initialize() -> Result<Database, Box<dyn std::error::Error>> {
     println!("🚀 Initializing BoostDB...");
     

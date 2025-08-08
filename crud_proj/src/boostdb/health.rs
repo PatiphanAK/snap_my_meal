@@ -1,3 +1,5 @@
+use sqlx::{PgPool, Error as SqlxError, Row};
+
 pub mod health {
     use super::*;
 
@@ -30,7 +32,7 @@ pub mod health {
         println!("✓ Basic connection: OK");
         
         // Pool status
-        println!("✓ Pool connections: {}/{}", pool.size(), pool.max_size());
+        println!("✓ Pool connections: {}", pool.size());
         println!("✓ Idle connections: {}", pool.num_idle());
         
         // Database info

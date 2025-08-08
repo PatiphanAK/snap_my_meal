@@ -1,5 +1,9 @@
+use sqlx::{PgPool, postgres::PgPoolOptions, Error as SqlxError};
+use std::time::Duration;
+use super::config::config::DbConfig;
+
 pub mod pool {
-    use super::config;
+    use super::*;
 
     pub async fn create_pool(config: DbConfig) -> Result<PgPool, SqlxError> {
         // Validate configuration
