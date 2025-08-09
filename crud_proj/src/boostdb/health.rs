@@ -3,6 +3,7 @@ use sqlx::{PgPool, Error as SqlxError, Row};
 pub mod health {
     use super::*;
 
+    #[allow(dead_code)]
     #[derive(Debug)]
     pub struct HealthStatus {
         pub connection: bool,
@@ -14,7 +15,7 @@ pub mod health {
         pub pool_size: u32,
         pub idle_connections: usize,
     }
-
+    #[allow(dead_code)]
     pub async fn basic_health_check(pool: &PgPool) -> Result<(), SqlxError> {
         sqlx::query("SELECT 1")
             .execute(pool)

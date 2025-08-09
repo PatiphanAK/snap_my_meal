@@ -13,6 +13,7 @@ pub struct Database {
 }
 
 impl Database {
+    #[allow(dead_code)]
     pub async fn new(config: config::config::DbConfig) -> Result<Self, SqlxError> {
         let pool = pool::pool::create_pool(config.clone()).await?;
         Ok(Database { pool, config })
@@ -35,11 +36,11 @@ impl Database {
     pub async fn health_check(&self) -> Result<health::health::HealthStatus, SqlxError> {
         health::health::detailed_health_check(&self.pool).await
     }
-
+    #[allow(dead_code)]
     pub async fn test_connection(&self) -> Result<(), SqlxError> {
         health::health::basic_health_check(&self.pool).await
     }
-
+    #[allow(dead_code)]
     pub async fn close(self) {
         pool::pool::close_pool(self.pool).await;
     }
