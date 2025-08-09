@@ -3,7 +3,7 @@ mod handlers;
 mod models;
 mod errors;
 mod services;
-mod repositories; // แก้ไขการสะกดจาก reposistoris
+mod repositories;
 mod boostdb;
 
 use std::sync::Arc;
@@ -17,7 +17,6 @@ async fn initialize_database() -> Result<Database, Box<dyn std::error::Error>> {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv::dotenv().ok();
     
-    // แก้ไข: ใช้ initialize_database() แทน initialize_database().await?
     let database = initialize_database().await?;
     let db_pool = Arc::new(database.pool().clone());
 

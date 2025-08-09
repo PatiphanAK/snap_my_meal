@@ -1,7 +1,5 @@
 use dotenv::dotenv;
 use std::env;
-use sqlx::{PgPool, postgres::PgPoolOptions, Error as SqlxError, Row};
-use std::time::Duration;
 
 
 pub mod config {
