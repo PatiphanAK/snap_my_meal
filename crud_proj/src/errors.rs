@@ -11,7 +11,7 @@ pub enum AppError {
     #[error("Not found")]
     NotFound,
     #[error("Invalid input: {0}")]
-    Validation(String),
+    ValidationError(String),
 }
 
 impl IntoResponse for AppError {
@@ -24,7 +24,7 @@ impl IntoResponse for AppError {
             AppError::NotFound => {
                 (StatusCode::NOT_FOUND, "Resource not found".to_string())
             },
-            AppError::Validation(msg) => {
+            AppError::ValidationError(msg) => {
                 (StatusCode::BAD_REQUEST, msg)
             },
         };
