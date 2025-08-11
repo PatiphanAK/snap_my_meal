@@ -1,5 +1,6 @@
 use sqlx::{PgPool, postgres::PgPoolOptions, Error as SqlxError};
 use std::time::Duration;
+use tracing::{info};
 use super::config::config::DbConfig;
 
 pub mod pool {
@@ -11,7 +12,7 @@ pub mod pool {
             return Err(SqlxError::Configuration(e.into()));
         }
 
-        println!("{}", config.display_info());
+        info!("{}", config.display_info());
         
         let pool = PgPoolOptions::new()
             .max_connections(config.max_connections)
@@ -26,8 +27,8 @@ pub mod pool {
     }
 
     pub async fn close_pool(pool: PgPool) {
-        println!("Closing database pool...");
+        info!("Closing database pool...");
         pool.close().await;
-        println!("Database pool closed successfully");
+        info!("Database pool closed successfully");
     }
 }

@@ -1,4 +1,5 @@
 use sqlx::{PgPool, Error as SqlxError, Row};
+use tracing::{debug};
 
 pub mod health {
     use super::*;
@@ -21,20 +22,20 @@ pub mod health {
             .execute(pool)
             .await?;
         
-        println!("✓ Database connection successful!");
+        debug!("✓ Database connection successful!");
         Ok(())
     }
 
     pub async fn detailed_health_check(pool: &PgPool) -> Result<HealthStatus, SqlxError> {
-        println!("=== Database Health Check ===");
+        debug!("=== Database Health Check ===");
         
         // Basic connection test
         sqlx::query("SELECT 1").execute(pool).await?;
-        println!("✓ Basic connection: OK");
+        debug!("✓ Basic connection: OK");
         
         // Pool status
-        println!("✓ Pool connections: {}", pool.size());
-        println!("✓ Idle connections: {}", pool.num_idle());
+        debug!("✓ Pool connections: {}", pool.size());
+        debug!("✓ Idle connections: {}", pool.num_idle());
         
         // Database info
         let db_info = sqlx::query("SELECT current_database(), current_user, version()")
@@ -50,9 +51,9 @@ pub mod health {
             .collect::<Vec<_>>()
             .join(" ");
         
-        println!("✓ Database: {}", database_name);
-        println!("✓ User: {}", user);
-        println!("✓ Version: {}", version);
+        debug!("✓ Database: {}", database_name);
+        debug!("✓ User: {}", user);
+        debug!("✓ Version: {}", version);
         
         // Table count
         let table_count = sqlx::query(
@@ -62,7 +63,7 @@ pub mod health {
         .fetch_one(pool)
         .await?;
         let table_count: i64 = table_count.get(0);
-        println!("✓ Tables in public schema: {}", table_count);
+        debug!("✓ Tables in public schema: {}", table_count);
         
         // Database size
         let db_size = sqlx::query(
@@ -71,9 +72,9 @@ pub mod health {
         .fetch_one(pool)
         .await?;
         let database_size: String = db_size.get(0);
-        println!("✓ Database size: {}", database_size);
+        debug!("✓ Database size: {}", database_size);
         
-        println!("=== Health Check Complete ===\n");
+        debug!("=== Health Check Complete ===\n");
         
         Ok(HealthStatus {
             connection: true,

@@ -3,13 +3,14 @@ use async_trait::async_trait;
 
 use crate::{
     errors::AppError, 
-    models::{products::Product, pagination::Pagination},
+    models::{pagination::Pagination, products::{ ProductForm, ProductResponse}},
     repositories::product_repositories::{ProductRepository, ProductRepositoryTrait}
 };
 
 #[async_trait]
 pub trait ProductServiceTrait: Send + Sync {
-    async fn list_products(&self, pagination: Pagination) -> Result<Vec<Product>, AppError>;
+    async fn list_products(&self, pagination: Pagination) -> Result<Vec<ProductResponse>, AppError>;
+    async fn add_product(&self, product: ProductForm) -> Result<ProductResponse, AppError>;
 }
 
 pub struct ProductService {
@@ -30,7 +31,10 @@ impl ProductService {
 
 #[async_trait]
 impl ProductServiceTrait for ProductService {
-    async fn list_products(&self, pagination: Pagination) -> Result<Vec<Product>, AppError> {
+    async fn list_products(&self, pagination: Pagination) -> Result<Vec<ProductResponse>, AppError> {
         self.repo.get_product_list(pagination).await
+    }
+    async fn add_product(&self, product: ProductForm) -> Result<ProductResponse, AppError> {
+        self.repo.create_product_with_categories(product).await
     }
 }

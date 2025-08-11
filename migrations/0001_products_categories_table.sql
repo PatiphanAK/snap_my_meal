@@ -1,6 +1,6 @@
 -- Table for Products
 CREATE TABLE products (
-    id VARCHAR(255) PRIMARY KEY,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     brand VARCHAR(255),
     image_url VARCHAR(255),
@@ -23,13 +23,13 @@ CREATE TABLE products (
 
 -- Table for Categories
 CREATE TABLE categories (
-    id VARCHAR(255) PRIMARY KEY,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Junction table for the many-to-many relationship between Products and Categories
 CREATE TABLE product_category (
-    product_id VARCHAR(255) REFERENCES products(id),
-    category_id VARCHAR(255) REFERENCES categories(id),
+    product_id INT REFERENCES products(id),
+    category_id INT REFERENCES categories(id),
     PRIMARY KEY (product_id, category_id)
 );

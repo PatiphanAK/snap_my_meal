@@ -22,7 +22,58 @@ is_healthier ผ่านเกณฑ์การรับรองตาม htt
 */
 #[derive(Debug, Clone, Serialize, Deserialize, Default, FromRow)]
 pub struct Product {
-    pub id: String,
+    pub id: i32,
+    pub name: String,
+    pub brand: Option<String>,
+    pub image_url: Option<String>,
+
+    pub serving_size_grams: Option<f32>,
+    pub calories: i32,
+    pub fat: f32,
+    pub sugar: f32,
+    pub sodium: f32,
+    pub protein: f32,
+    pub carbs: f32,
+
+    pub saturated_fat: f32,
+    pub cholesterol: f32,
+    pub vitamin_c: Option<f32>,
+    pub calcium: Option<f32>,
+    pub vitamin_b1: Option<f32>,
+    pub vitamin_a: Option<f32>,
+
+    pub is_upf: bool,
+    pub is_healthier:bool
+
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ProductForm {
+    pub id: Option<String>,
+    pub name: String,
+    pub brand: Option<String>,
+    pub image_url: Option<String>,
+    pub categories: Vec<String>,
+    pub serving_size_grams: Option<f32>,
+    pub calories: i32,
+    pub fat: f32,
+    pub sugar: f32,
+    pub sodium: f32,
+    pub protein: f32,
+    pub carbs: f32,
+    pub saturated_fat: f32,
+    pub cholesterol: f32,
+    pub vitamin_c: Option<f32>,
+    pub calcium: Option<f32>,
+    pub vitamin_b1: Option<f32>,
+    pub vitamin_a: Option<f32>,
+    pub is_upf: bool,
+    pub is_healthier: bool,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Default, FromRow)]
+pub struct ProductResponse {
+    pub id: i32,
     pub name: String,
     pub brand: Option<String>,
     pub image_url: Option<String>,
