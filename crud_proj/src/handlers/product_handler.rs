@@ -1,5 +1,5 @@
 use axum::{extract::{Query, State}, Json};
-use crate::models::products::{ProductForm, ProductResponse};
+use crate::models::{pagination::TemplateResponse, products::{ProductForm, ProductResponse}};
 use sqlx::PgPool;
 use std::sync::Arc;
 
@@ -8,11 +8,19 @@ use crate::{
 };
 
 pub async fn get_product_list(State(pool): State<Arc<PgPool>>,Query(pagination): Query<Pagination>) 
--> Result<Json<Vec<ProductResponse>>, AppError> {
+-> Result<Json<TemplateResponse<ProductResponse>>, AppError> {
     let repo = Arc::new(ProductRepository::new(pool.clone()));
     let service = product_service::ProductService::new(repo);
+    let pagination_clone = pagination.clone();
     let products: Vec<ProductResponse> = service.list_products(pagination).await?;
-    Ok(Json(products))
+    let total = products.len();
+    let response = TemplateResponse::<ProductResponse> {
+        items: products.clone(),
+        total,
+        limit: pagination_clone.limit.unwrap_or(0),
+        offset: pagination_clone.offset.unwrap_or(0),
+    };
+    Ok(Json(response))
 }
 
 pub async  fn add_product(State(pool): State<Arc<PgPool>>, Json(payload): Json<ProductForm>)
@@ -22,3 +30,8 @@ pub async  fn add_product(State(pool): State<Arc<PgPool>>, Json(payload): Json<P
     let new_product = service.add_product(payload).await?;
     Ok(Json(new_product))
 }
+
+// pub async  fn get_single_product(State(pool): State<Arc<PgPool>>)
+// -> Result<Json<ProductResponse>, AppError>{
+
+// }

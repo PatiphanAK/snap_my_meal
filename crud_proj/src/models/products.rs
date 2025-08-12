@@ -42,6 +42,7 @@ pub struct Product {
     pub vitamin_b1: Option<f32>,
     pub vitamin_a: Option<f32>,
 
+    pub price: f32,
     pub is_upf: bool,
     pub is_healthier:bool
 
@@ -67,6 +68,7 @@ pub struct ProductForm {
     pub calcium: Option<f32>,
     pub vitamin_b1: Option<f32>,
     pub vitamin_a: Option<f32>,
+    pub price: f32,
     pub is_upf: bool,
     pub is_healthier: bool,
 }
@@ -94,6 +96,7 @@ pub struct ProductResponse {
     pub vitamin_b1: Option<f32>,
     pub vitamin_a: Option<f32>,
 
+    pub price: f32,
     pub is_upf: bool,
     pub is_healthier:bool
 

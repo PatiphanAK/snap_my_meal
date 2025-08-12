@@ -90,14 +90,16 @@ impl ProductRepositoryTrait for ProductRepository {
             AppError::DatabaseError(e)
         })?;
 
-        // Insert product
+        
         let product_row = match sqlx::query_as::<_, Product>(
             r#"
             INSERT INTO products (
                 name, brand, image_url, serving_size_grams, calories, fat, sugar, 
                 sodium, protein, carbs, saturated_fat, cholesterol, vitamin_c, 
-                calcium, vitamin_b1, vitamin_a, is_upf, is_healthier
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+                calcium, vitamin_b1, vitamin_a, price, is_upf, is_healthier
+            ) VALUES (
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19
+            )
             RETURNING *
             "#
         )
@@ -117,6 +119,7 @@ impl ProductRepositoryTrait for ProductRepository {
         .bind(product.calcium)
         .bind(product.vitamin_b1)
         .bind(product.vitamin_a)
+        .bind(product.price)
         .bind(product.is_upf)
         .bind(product.is_healthier)
         .fetch_one(&mut *tx)
@@ -138,7 +141,7 @@ impl ProductRepositoryTrait for ProductRepository {
             }
         };
 
-        // Insert categories และเก็บ categories ที่ insert สำเร็จ
+        
         let mut inserted_categories = Vec::new();
         
         if !product.categories.is_empty() {
@@ -180,7 +183,7 @@ impl ProductRepositoryTrait for ProductRepository {
 
         debug!("🎉 Transaction committed successfully!");
         
-        // สร้าง ProductResponse พร้อม categories
+        
         let response = ProductResponse {
             id: product_row.id,
             name: product_row.name,
@@ -199,6 +202,7 @@ impl ProductRepositoryTrait for ProductRepository {
             calcium: product_row.calcium,
             vitamin_b1: product_row.vitamin_b1,
             vitamin_a: product_row.vitamin_a,
+            price: product_row.price,
             is_upf: product_row.is_upf,
             is_healthier: product_row.is_healthier,
             categories: inserted_categories,

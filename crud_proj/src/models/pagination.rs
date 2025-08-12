@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Pagination {
     pub limit: Option<i32>,
     pub offset: Option<i32>,
@@ -9,9 +9,9 @@ pub struct Pagination {
 }
 
 #[derive(Serialize)]
-pub struct ProductPaginatedResponse<T> {
+pub struct TemplateResponse<T> {
     pub items: Vec<T>,
-    pub total: i32,
+    pub total: usize,
     pub limit: i32,
     pub offset: i32,
 }
