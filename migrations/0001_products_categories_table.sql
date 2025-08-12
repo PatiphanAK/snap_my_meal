@@ -17,6 +17,7 @@ CREATE TABLE products (
     calcium REAL,
     vitamin_b1 REAL,
     vitamin_a REAL,
+    price REAL,
     is_upf BOOLEAN NOT NULL,
     is_healthier BOOLEAN NOT NULL
 );

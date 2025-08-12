@@ -3,3 +3,4 @@
 /crud_proj/target
 .vscode/
 .sqlx
+Cargo.lock
