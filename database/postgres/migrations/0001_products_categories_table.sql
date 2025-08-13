@@ -1,6 +1,8 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Table for Products
 CREATE TABLE products (
-    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), -- ใช้ UUID และสร้างแบบสุ่ม
     name VARCHAR(255) NOT NULL,
     brand VARCHAR(255),
     image_url VARCHAR(255),
@@ -30,7 +32,7 @@ CREATE TABLE categories (
 
 -- Junction table for the many-to-many relationship between Products and Categories
 CREATE TABLE product_category (
-    product_id INT REFERENCES products(id),
+    product_id UUID REFERENCES products(id),
     category_id INT REFERENCES categories(id),
     PRIMARY KEY (product_id, category_id)
 );

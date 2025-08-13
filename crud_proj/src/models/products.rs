@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use sqlx::prelude::FromRow;
-
+use uuid::Uuid;
 /*
 Model ของ Categoris ที่ใช้จัดหมวดหมู่ของ Product
 */
@@ -22,7 +22,7 @@ is_healthier ผ่านเกณฑ์การรับรองตาม htt
 */
 #[derive(Debug, Clone, Serialize, Deserialize, Default, FromRow)]
 pub struct Product {
-    pub id: i32,
+    pub id:Uuid,
     pub name: String,
     pub brand: Option<String>,
     pub image_url: Option<String>,
@@ -75,7 +75,7 @@ pub struct ProductForm {
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, FromRow)]
 pub struct ProductResponse {
-    pub id: i32,
+    pub id: Uuid,
     pub name: String,
     pub brand: Option<String>,
     pub image_url: Option<String>,
