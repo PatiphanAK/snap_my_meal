@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:latest
+    image: postgres:17-alpine
     container_name: products_db
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -12,6 +12,17 @@ services:
       - products_db_data:/var/lib/postgresql/data
       - ./migrations:/docker-entrypoint-initdb.d
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - my_app_network
 
 volumes:
   products_db_data:
+
+networks:
+  my_app_network:
+    driver: bridge
