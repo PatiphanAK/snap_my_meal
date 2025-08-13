@@ -14,3 +14,20 @@ services:
 
 volumes:
   products_db_data:
+
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-app-migration
+    depends_on:
+      - database
+    environment:
+      # These environment variables will be passed to the load_migration.sh script.
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: myapp_db
+      DB_HOST: database # Use the service name as the hostname.
+      DB_PORT: 5432
+    command: ["/app/load_migration.sh"]

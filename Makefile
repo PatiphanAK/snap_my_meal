@@ -10,10 +10,13 @@ dbup:
 	@echo "🐘 Starting PostgreSQL container..."
 	DOCKER_HOST=unix:///var/run/docker.sock cd database/postgres && docker compose up -d
 
-
 # Run everything: env + dbup
 build: dbup
 	@echo "🚀 Database is up and running."
+
+migrate:
+	chmod +x load_migration.sh
+	./load_migration.sh
 
 run_app_api :
 	@echo "Starting the API server..."

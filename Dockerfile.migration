@@ -1,0 +1,10 @@
+FROM postgres:13-slim
+
+WORKDIR /app
+
+COPY migrations /app/migrations
+COPY load_migration.sh /app/load_migration.sh
+
+RUN chmod +x /app/load_migration.sh
+
+ENTRYPOINT ["/app/load_migration.sh"]
