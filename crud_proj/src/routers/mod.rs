@@ -4,6 +4,7 @@ use chrono::Utc;
 use sqlx::{PgPool};
 use std::sync::Arc;
 
+
 // Modules
 pub mod api;
 
@@ -21,9 +22,10 @@ pub fn create_app_router(db_pool: Arc<PgPool>) -> Router {
 // สร้าง API v1 routes
 fn api_v1_routes(db_pool: Arc<PgPool>) -> Router {
     Router::new()
-        .merge(api::product_router::create_router(db_pool))
+        .nest("/products", api::product_router::create_router())  
+        // .nest("/categories", api::categories_router::create_app_router())
+        .with_state(db_pool)
 }
-
 
 async fn root_handler() -> Json<Value> {
     Json(json!({

@@ -8,7 +8,7 @@ pub struct Pagination {
     pub search: Option<String>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Default)]
 pub struct TemplateResponse<T> {
     pub items: Vec<T>,
     pub total: usize,

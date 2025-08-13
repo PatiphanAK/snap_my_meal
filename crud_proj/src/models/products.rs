@@ -54,7 +54,7 @@ pub struct ProductForm {
     pub name: String,
     pub brand: Option<String>,
     pub image_url: Option<String>,
-    pub categories: Vec<String>,
+    pub categories_ids: Vec<String>,
     pub serving_size_grams: Option<f32>,
     pub calories: i32,
     pub fat: f32,

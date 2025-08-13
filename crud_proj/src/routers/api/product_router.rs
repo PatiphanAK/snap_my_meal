@@ -1,11 +1,20 @@
-use axum::{routing::{get}, Router};
-use crate::handlers::{product_handler};
 use std::sync::Arc;
-use sqlx::PgPool;
+use axum::{routing::{get}, Router};
+use sqlx::{Pool, Postgres};
 
-pub fn create_router(db_pool: Arc<PgPool>) -> Router {
+use crate::handlers::product_handler;
+
+pub fn create_router() -> Router<Arc<Pool<Postgres>>> {
     Router::new()
-                .route("/products", get(product_handler::get_product_list)
-                .post(product_handler::add_product))
-                .with_state(db_pool)
+        .route(
+            "/",
+            get(product_handler::get_product_list)
+                .post(product_handler::add_product),
+        )
+        .route(
+            "/{id}",
+            get(product_handler::get_product_from_id)
+                .patch(product_handler::update_product_with_id)
+                .delete(product_handler::delete_product_with_id),
+        )
 }
