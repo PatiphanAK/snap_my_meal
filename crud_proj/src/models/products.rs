@@ -1,15 +1,15 @@
 use serde::{Deserialize, Serialize};
 use sqlx::prelude::FromRow;
 use uuid::Uuid;
-
-/// Product Model
-///
-/// - `categories`: Category to which the product belongs
-/// - `brand`: Name of the product owner (`Option<String>`)
-/// - `image_url`: URL of the product image (`Option<String>`)
-/// - `serving_size_grams`: Serving size in grams
-/// - `is_upf`: Whether the product is ultra-processed food
-/// - `is_healthier`: Whether the product is certified [Healthier Choice](http://healthierlogo.com/)
+/*
+Product Model
+ - `categories`: Category to which the product belongs
+ - `brand`: Name of the product owner (`Option<String>`)
+ - `image_url`: URL of the product image (`Option<String>`)
+ - `serving_size_grams`: Serving size in grams
+ - `is_upf`: Whether the product is ultra-processed food
+ - `is_healthier`: Whether the product is certified [Healthier Choice](http://healthierlogo.com/)
+ */
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, FromRow)]
 pub struct Product {
