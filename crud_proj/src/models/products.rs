@@ -1,28 +1,19 @@
 use serde::{Deserialize, Serialize};
 use sqlx::prelude::FromRow;
 use uuid::Uuid;
-/*
-Model ของ Categoris ที่ใช้จัดหมวดหมู่ของ Product
-*/
 
-// pub struct Categories {
-//     pub id: String,
-//     pub name: String,
-// }
+/// Product Model
+///
+/// - `categories`: Category to which the product belongs
+/// - `brand`: Name of the product owner (`Option<String>`)
+/// - `image_url`: URL of the product image (`Option<String>`)
+/// - `serving_size_grams`: Serving size in grams
+/// - `is_upf`: Whether the product is ultra-processed food
+/// - `is_healthier`: Whether the product is certified [Healthier Choice](http://healthierlogo.com/)
 
-
-/* 
-Model ของ Product
-categoris ใช้อิงว่าอาหารนี้อยู่หมวดอะไร
-brand และใช้ Option<String> เพื่อรองรับกรณีที่ไม่มีข้อมูล
-image_url และใช้ Option<String>
-serving_size_grams ขนาดการบริโภคต่อหน่วยเป็นกรัม
-is_upf เป็น Ultra process food หรือไม่
-is_healthier ผ่านเกณฑ์การรับรองตาม http://healthierlogo.com/ หรือไม่
-*/
 #[derive(Debug, Clone, Serialize, Deserialize, Default, FromRow)]
 pub struct Product {
-    pub id:Uuid,
+    pub id: Uuid,
     pub name: String,
     pub brand: Option<String>,
     pub image_url: Option<String>,
@@ -44,8 +35,7 @@ pub struct Product {
 
     pub price: f32,
     pub is_upf: bool,
-    pub is_healthier:bool
-
+    pub is_healthier: bool,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -98,6 +88,5 @@ pub struct ProductResponse {
 
     pub price: f32,
     pub is_upf: bool,
-    pub is_healthier:bool
-
+    pub is_healthier: bool,
 }
